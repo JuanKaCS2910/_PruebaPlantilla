@@ -13,112 +13,59 @@
 }
 
 <ul id="js-nav-menu" class="nav-menu">
-    @foreach (var group in Model.ToList())
+
+    @if (ListaNavegacion != null)
     {
-        @if (group.Items.Any())
+        @foreach (var group in ListaNavegacion.ToList())
         {
-            @*var groups = group.Items.Select(x => x.Href.ToPage()).Where(x => !x.IsVoid()).ToList();*@
-            var groups = group.Items.Select(x => x.Href_page).ToList();
-
-
-            group.Items.ForEach(item =>
+            @if (group.Items.Any())
             {
-                //var result = item.Items?.Select(x => x.Href.ToPage()).Where(x => !x.IsVoid()).ToList();
-                var result = item.Items?.Select(x => x.Href_page).ToList();
-                if (result?.Any() == true)
+                @*var groups = group.Items.Select(x => x.Href.ToPage()).Where(x => !x.IsVoid()).ToList();*@
+                var groups = group.Items.Select(x => x.Href_page).ToList();
+
+
+                group.Items.ForEach(item =>
                 {
-                    groups = groups.Concat(result).ToList();
-                }
-            });
-            <li class="@(groups.Contains(pageName) ? "active open" : "")">
-                <a href="#" title="@group.Title" data-filter-tags="@group.Tags">
-                    <i class="@group.Icon"></i>
-                    @*<span class="nav-link-text" data-i18n="@group.I18n">@group.Text.AsRaw()</span>*@
-                    <span class="nav-link-text" data-i18n="@group.I18n">@group.Text</span>
-                    @if (group.Span.HasValue())
+                    //var result = item.Items?.Select(x => x.Href.ToPage()).Where(x => !x.IsVoid()).ToList();
+                    var result = item.Items?.Select(x => x.Href_page).ToList();
+                    if (result?.Any() == true)
                     {
-                        @*<span class="@group.Span.Class">@group.Span.Text.AsRaw()</span>*@
-                        <span class="@group.Span.Class">@group.Span.Text</span>
+                        groups = groups.Concat(result).ToList();
                     }
-                </a>
-                <ul>
-                    @{
-                        foreach (var item in group.Items)
+                });
+                <li class="@(groups.Contains(pageName) ? "active open" : "")">
+                    <a href="#" title="@group.Title" data-filter-tags="@group.Tags">
+                        <i class="@group.Icon"></i>
+                        @*<span class="nav-link-text" data-i18n="@group.I18n">@group.Text.AsRaw()</span>*@
+                        <span class="nav-link-text" data-i18n="@group.I18n">@group.Text</span>
+                        @if (group.Span.HasValue())
                         {
-                            //var items = item.Items?.Select(x => x.Href.ToPage()).Where(x => !x.IsVoid()).ToList();
-                            var items = item.Items?.Select(x => x.Href_page).ToList();
-
-                            if (item.Disabled)
+                            @*<span class="@group.Span.Class">@group.Span.Text.AsRaw()</span>*@
+                            <span class="@group.Span.Class">@group.Span.Text</span>
+                        }
+                    </a>
+                    <ul>
+                        @{
+                            foreach (var item in group.Items)
                             {
-                                <text>
-                                    <li class="disabled">
-                                         <text>
-                                            <a href="@item.Route" title="@item.Title" target="@item.Target" data-filter-tags="@item.Tags">
-                                                @*<span class="nav-link-text" data-i18n="@item.I18n">@item.Text.AsRaw()</span>*@
-                                                <span class="nav-link-text" data-i18n="@item.I18n">@item.Text</span>
-                                                @if (item.Span.HasValue())
-                                                {
-                                                    @*<span class="@item.Span.Class">@item.Span.Text.AsRaw()</span>*@
-                                                    <span class="@item.Span.Class">@item.Span.Text</span>
-                                                }
-                                            </a>
-                                        </text>
+                                //var items = item.Items?.Select(x => x.Href.ToPage()).Where(x => !x.IsVoid()).ToList();
+                                var items = item.Items?.Select(x => x.Href_page).ToList();
 
-                                        @if (item.Items?.Any() == true)
-                                        {
-                                            <text>
-                                            <ul>
-                                                    @foreach (var subItem in item.Items)
-                                                    {
-                                                        if (subItem.Disabled)
-                                                        {
-                                                            <text>
-                                                        <li class="disabled">
-                                                            <a href="@subItem.Route" title="@subItem.Title" target="@subItem.Target" data-filter-tags="@subItem.Tags">
-                                                                        @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
-                                                                <span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text</span>
-                                                            </a>
-                                                        </li>
-                                                            </text>
-                                                        }
-                                                        else
-                                                        {
-                                                            <text>
-                                                                @*<li class="@(pageName == subItem.Href.ToPage() ? "active" : "")">*@
-                                            <li class="@(pageName == subItem.Href_page ? "active" : "")">
-                                                <a href="@subItem.Route" title="@subItem.Title" target="@subItem.Target" data-filter-tags="@subItem.Tags">
-                                                                        @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
-                                                    <span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text</span>
-                                                </a>
-                                            </li>
-                                                            </text>
-                                                        }
-                                                    }
-                                </ul>
-                                            </text>
-                                        }
-
-                                    </li>
-                                </text>
-                            }
-                            else
-                            {
-                                if (items?.Any() == true)
+                                if (item.Disabled)
                                 {
                                     <text>
-                                        @*<li class="@(items.Contains(pageName) || item.IsRelatedTo(pageName) ? "active open" : "")">*@
-                                        <li class="@(items.Contains(pageName) ? "active open" : "")">
-                                            <text>
-                                                <a href="@item.Route" title="@item.Title" target="@item.Target" data-filter-tags="@item.Tags">
+                                    <li class="disabled">
+                                        <text>
+                                            <a href="@item.Route" title="@item.Title" target="@item.Target" data-filter-tags="@item.Tags">
                                                     @*<span class="nav-link-text" data-i18n="@item.I18n">@item.Text.AsRaw()</span>*@
-                                                    <span class="nav-link-text" data-i18n="@item.I18n">@item.Text</span>
+                                                <span class="nav-link-text" data-i18n="@item.I18n">@item.Text</span>
                                                     @if (item.Span.HasValue())
                                                     {
                                                         @*<span class="@item.Span.Class">@item.Span.Text.AsRaw()</span>*@
-                                                        <span class="@item.Span.Class">@item.Span.Text</span>
+                                                    <span class="@item.Span.Class">@item.Span.Text</span>
                                                     }
-                                                </a>
-                                            </text>
+                                            </a>
+                                        </text>
 
                                             @if (item.Items?.Any() == true)
                                             {
@@ -154,103 +101,162 @@
                                                 </text>
                                             }
 
-
-                                        </li>
+                            </li>
                                     </text>
                                 }
                                 else
                                 {
+                                    if (items?.Any() == true)
+                                    {
+                                        <text>
+                                            @*<li class="@(items.Contains(pageName) || item.IsRelatedTo(pageName) ? "active open" : "")">*@
+                                <li class="@(items.Contains(pageName) ? "active open" : "")">
                                     <text>
-                                        @*<li class="@(pageName == item.Href.ToPage() ? "active" : "")">*@
-                                    <li class="@(pageName == item.Href_page ? "active" : "")">
-                                            <text>
-                                                <a href="@item.Route" title="@item.Title" target="@item.Target" data-filter-tags="@item.Tags">
-                                                    @*<span class="nav-link-text" data-i18n="@item.I18n">@item.Text.AsRaw()</span>*@
-                                                    <span class="nav-link-text" data-i18n="@item.I18n">@item.Text</span>
-                                                    @if (item.Span.HasValue())
-                                                    {
-                                                        @*<span class="@item.Span.Class">@item.Span.Text.AsRaw()</span>*@
-                                                        <span class="@item.Span.Class">@item.Span.Text</span>
-                                                    }
-                                                </a>
-                                            </text>
+                                        <a href="@item.Route" title="@item.Title" target="@item.Target" data-filter-tags="@item.Tags">
+                                                        @*<span class="nav-link-text" data-i18n="@item.I18n">@item.Text.AsRaw()</span>*@
+                                            <span class="nav-link-text" data-i18n="@item.I18n">@item.Text</span>
+                                                        @if (item.Span.HasValue())
+                                                        {
+                                                            @*<span class="@item.Span.Class">@item.Span.Text.AsRaw()</span>*@
+                                                <span class="@item.Span.Class">@item.Span.Text</span>
+                                                        }
+                                        </a>
+                                    </text>
 
-                                        @if (item.Items?.Any() == true)
-                                                    {
+                                                @if (item.Items?.Any() == true)
+                                                {
                                                     <text>
-                                                        <ul>
-                                                                @foreach (var subItem in item.Items)
+                                            <ul>
+                                                            @foreach (var subItem in item.Items)
+                                                            {
+                                                                if (subItem.Disabled)
                                                                 {
-                                                                    if (subItem.Disabled)
-                                                                    {
-                                                                        <text>
-                                                                    <li class="disabled">
-                                                                        <a href="@subItem.Route" title="@subItem.Title" target="@subItem.Target" data-filter-tags="@subItem.Tags">
-                                                                                    @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
-                                                                            <span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text</span>
-                                                                        </a>
-                                                                    </li>
-                                                                        </text>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <text>
-                                                                            @*<li class="@(pageName == subItem.Href.ToPage() ? "active" : "")">*@
-                                                        <li class="@(pageName == subItem.Href_page ? "active" : "")">
+                                                                    <text>
+                                                        <li class="disabled">
                                                             <a href="@subItem.Route" title="@subItem.Title" target="@subItem.Target" data-filter-tags="@subItem.Tags">
-                                                                                    @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
+                                                                                @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
                                                                 <span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text</span>
                                                             </a>
                                                         </li>
-                                                                        </text>
-                                                                    }
+                                                                    </text>
                                                                 }
-                                            </ul>
-                                            </text>
-                                            }
+                                                                else
+                                                                {
+                                                                    <text>
+                                                                        @*<li class="@(pageName == subItem.Href.ToPage() ? "active" : "")">*@
+                                            <li class="@(pageName == subItem.Href_page ? "active" : "")">
+                                                <a href="@subItem.Route" title="@subItem.Title" target="@subItem.Target" data-filter-tags="@subItem.Tags">
+                                                                                @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
+                                                    <span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text</span>
+                                                </a>
+                                            </li>
+                                                                    </text>
+                                                                }
+                                                            }
+                                </ul>
+                                                    </text>
+                                                }
 
 
-                                        </li>
+                                                                    </li>
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            @*<li class="@(pageName == item.Href.ToPage() ? "active" : "")">*@
+                                <li class="@(pageName == item.Href_page ? "active" : "")">
+                                    <text>
+                                        <a href="@item.Route" title="@item.Title" target="@item.Target" data-filter-tags="@item.Tags">
+                                                        @*<span class="nav-link-text" data-i18n="@item.I18n">@item.Text.AsRaw()</span>*@
+                                            <span class="nav-link-text" data-i18n="@item.I18n">@item.Text</span>
+                                                        @if (item.Span.HasValue())
+                                                        {
+                                                            @*<span class="@item.Span.Class">@item.Span.Text.AsRaw()</span>*@
+                                                <span class="@item.Span.Class">@item.Span.Text</span>
+                                                        }
+                                        </a>
                                     </text>
+
+                                                @if (item.Items?.Any() == true)
+                                                {
+                                                    <text>
+                                            <ul>
+                                                            @foreach (var subItem in item.Items)
+                                                            {
+                                                                if (subItem.Disabled)
+                                                                {
+                                                                    <text>
+                                                        <li class="disabled">
+                                                            <a href="@subItem.Route" title="@subItem.Title" target="@subItem.Target" data-filter-tags="@subItem.Tags">
+                                                                                @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
+                                                                <span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text</span>
+                                                            </a>
+                                                        </li>
+                                                                    </text>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <text>
+                                                                        @*<li class="@(pageName == subItem.Href.ToPage() ? "active" : "")">*@
+                                            <li class="@(pageName == subItem.Href_page ? "active" : "")">
+                                                <a href="@subItem.Route" title="@subItem.Title" target="@subItem.Target" data-filter-tags="@subItem.Tags">
+                                                                                @*<span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text.AsRaw()</span>*@
+                                                    <span class="nav-link-text" data-i18n="@subItem.I18n">@subItem.Text</span>
+                                                </a>
+                                            </li>
+                                                                    </text>
+                                                                }
+                                                            }
+                                                                            </ul>
+                                                    </text>
+                                                }
+
+
+                                                                    </li>
+                                        </text>
+                                    }
                                 }
+
+
                             }
-                            
-                            
                         }
-                    }
-                </ul>
-            </li>
-        }
-        else
-        {
-            if (group.Type == ItemType.Category)
-            {
-                <li class="nav-title">@group.Title</li>
+                            </ul>
+                        </li>
             }
             else
             {
-                //<li class="@(pageName == group.Href.ToPage() ? "active" : "")">
+                if (group.Type == ItemType.Category)
+                {
+                <li class="nav-title">@group.Title</li>
+                }
+                else
+                {
+                    //<li class="@(pageName == group.Href.ToPage() ? "active" : "")">
                 <li class="@(pageName == group.Href_page ? "active" : "")">
                     <a href="@group.Route" title="@group.Title" target="@group.Target" data-filter-tags="@group.Tags">
                         <i class="@group.Icon"></i>
-                        @*<span class="nav-link-text" data-i18n="@group.I18n">@group.Title.AsRaw()</span>*@
+                            @*<span class="nav-link-text" data-i18n="@group.I18n">@group.Title.AsRaw()</span>*@
                         <span class="nav-link-text" data-i18n="@group.I18n">@group.Title</span>
                     </a>
                 </li>
+                }
             }
         }
     }
+
+    
 </ul>
 
 @code {
 
-    public List<ListItemDTO>? Model { get; set; }
+    public List<ListItemDTO> ListaNavegacion { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         
         var responseHttp = await repository.Get<List<ListItemDTO>>("/api/Login");
-        Model = responseHttp.Response;
+        ListaNavegacion = responseHttp.Response;
     }
 
 }
