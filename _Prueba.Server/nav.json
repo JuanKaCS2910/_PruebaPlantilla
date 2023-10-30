@@ -1,0 +1,118 @@
+{
+  "version": "4",
+  "lists": [
+    {
+      "title": "ASP.NET Core 6.0",
+      "roles": []
+    },
+    {
+      "title": "Welcome",
+      "href": "aspnetcore_welcome.html",
+      "href_page": "aspnetcore_welcome",
+      "icon": "fal fa-graduation-cap",
+      "roles": []
+    },
+    {
+      "title": "Authorization",
+      "icon": "fal fa-shield-alt",
+      "roles": [
+        "Administrator"
+      ],
+      "items": [
+        {
+          "title": "Users",
+          "href": "authorization_users.html",
+          "href_page": "authorization_users",
+          "roles": []
+        },
+        {
+          "title": "Roles",
+          "href": "authorization_roles.html",
+          "roles": []
+        }
+      ]
+    },
+    {
+      "title": "Solution Overview",
+      "icon": "fal fa-folder-open",
+      "roles": [],
+      "items": [
+        {
+          "title": "Editions",
+          "showOnSeed": false,
+          "href": "aspnetcore_editions.html",
+          "href_page": "aspnetcore_editions",
+          "roles": []
+        },
+        {
+          "title": "FAQ",
+          "href": "aspnetcore_faq.html",
+          "href_page": "aspnetcore_faq",
+          "roles": []
+        },
+        {
+          "title": "Interactive",
+          "showOnSeed": false,
+          "href": "aspnetcore_interactive.html",
+          "href_page": "aspnetcore_interactive",
+          "roles": []
+        }
+      ]
+    },
+    {
+      "title": "Documentation",
+      "icon": "fal fa-book",
+      "roles": [],
+      "items": [
+        {
+          "title": "Introduction",
+          "href": "documentation_introduction.html",
+          "href_page": "documentation_introduction",
+          "roles": []
+        },
+        {
+          "title": "Getting Started",
+          "href": "documentation_getting_started.html",
+          "href_page": "documentation_getting_started",
+          "roles": []
+        },
+        {
+          "title": "Site Structure",
+          "href": "documentation_site_structure.html",
+          "href_page": "documentation_site_structure",
+          "roles": []
+        },
+        {
+          "title": "Solution Architecture",
+          "href": "documentation_solution_architecture.html",
+          "href_page": "documentation_solution_architecture",
+          "roles": []
+        },
+        {
+          "title": "Customizations",
+          "href": "documentation_customizations.html",
+          "href_page": "documentation_customizations",
+          "roles": []
+        },
+        {
+          "title": "Howto Contribute",
+          "href": "documentation_howto_contribute.html",
+          "href_page": "documentation_howto_contribute",
+          "roles": []
+        },
+        {
+          "title": "Licensing Information",
+          "href": "documentation_licensing_information.html",
+          "href_page": "documentation_licensing_information",
+          "roles": []
+        },
+        {
+          "title": "Changelog",
+          "href": "documentation_changelog.html",
+          "href_page": "documentation_changelog",
+          "roles": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+﻿
+@inject IJSRuntime JS
+@*<script src="~/js/vendors.bundle.js"></script>
+<script src="~/js/app.bundle.js"></script>
+<script src="~/js/site.js"></script>*@
+
+@code {
+    private IJSObjectReference? jsModule;
+    private IJSObjectReference? jsModule1;
+    private IJSObjectReference? jsModule2;
+
+    protected override async Task OnInitializedAsync()
+    {
+        jsModule = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "./js/vendors.bundle.js");
+        jsModule1 = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "./js/app.bundle.js");
+
+        jsModule2 = await JS.InvokeAsync<IJSObjectReference>(
+                "import", "./js/site.js");
+
+        await jsModule.InvokeVoidAsync("DOMCleanup.createObserver");
+        await jsModule1.InvokeVoidAsync("DOMCleanup.createObserver");
+        await jsModule2.InvokeVoidAsync("DOMCleanup.createObserver");
+
+        //JS.InvokeVoidAsync("alert", "Hello world");
+        //JS.InvokeVoidAsync("Kendo/2021.2.515/Scripts/js/jquery.min.js");
+
+        //JS.InvokeAsync<IJSObjectReference>("import", "Kendo/2021.2.515/Scripts/js/jquery.min.js");
+        //JS.InvokeAsync<IJSObjectReference>("import", "js/vendors.bundle.js");
+        //JS.InvokeAsync<IJSObjectReference>("import", "js/site.js");
+        //return base.OnInitializedAsync();
+    }
+
+}

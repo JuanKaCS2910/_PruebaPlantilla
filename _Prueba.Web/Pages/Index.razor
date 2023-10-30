@@ -1,0 +1,77 @@
+﻿@using _Prueba.Shared;
+@using _Prueba.Web.Repositorios;
+
+@page "/"
+
+@inject IRepositorio repository
+
+
+<PageTitle>Index</PageTitle>
+
+@*<h1>Hello, world!</h1>
+
+Welcome to your new app.*@
+
+
+@if (Menus is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Menus!)
+            {
+                <tr>
+                    <td>
+
+                    </td>
+                    <td>
+                        @item.Title
+                        @if (item.Items.Count > 0)
+                        {
+                            
+                            @foreach (var subMenus in item.Items)
+                            {
+                                <span class="alert-danger">
+                                    @subMenus.Title.ToString() | 
+                                </span>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@*@foreach (var item in Menus.ToList)
+{
+    <span>item.</span>
+}*@
+
+
+
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+
+@code {
+
+    public List<ListItemDTO>? Menus { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        var responseHttp = await repository.Get<List<ListItemDTO>>("/api/Login");
+        Menus = responseHttp.Response;
+    }
+
+}
